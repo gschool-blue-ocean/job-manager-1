@@ -12,9 +12,15 @@ export default function Header() {
         <div className="w-full md:w-auto ml-6 items-center">
           <ul className="flex font-medium  ">
             <li className="flex">
-              <a className="block py-2 pl-3 pr-4 text-blue-500">Home</a>
-              <a className="block py-2 pl-3 pr-4 text-blue-500">Profile</a>
-              <a className="block py-2 pl-3 pr-4 text-blue-500">Documents</a>
+              <a className="block py-2 pl-3 pr-4 text-blue-500">
+                Home
+              </a>
+              <a className="block py-2 pl-3 pr-4 text-blue-500">
+                Profile
+              </a>
+              <a className="block py-2 pl-3 pr-4 text-blue-500">
+                Documents
+              </a>
             </li>
           </ul>
         </div>
@@ -22,3 +28,4 @@ export default function Header() {
     </nav>
   );
 }
+ 

@@ -1,29 +1,23 @@
 import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
+import CohortModal from "./CohortModal";
 import ReactModal from "react-modal";
+import FilterBar from "./FilterBar";
+import StudentDisplay from "./StudentDisplay";
 
 export default function Cohorts() {
   const [students, setStudents] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCohort, setSelectedCohort] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleAddButtonClick = () => {
-    setIsModalOpen(true);
+    setModalIsOpen(true);
+    console.log("hello");
   };
 
-  // useEffect(() => {
-  //   fetch("/api/users")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setStudents(data); // Save the data in the state
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
-
   return (
-    <div className="flex bg-gray-900 justify-center h-screen shadow-2xl text-white">
-      <div className="mr-20 w-64 h-fit border border-white mt-2 rounded-lg text-center text-2xl flex flex-col items-center bg-gray-800">
+    <div className="flex w-full bg-gray-900  text-white">
+      <div className="w-1/4 h-fit border border-white mt-2 rounded-lg text-center text-2xl flex flex-col items-center bg-gray-800">
         <h1 className="text-center">Your Cohorts</h1>
         <button className="w-56 h-fit rounded-lg text-center text-xl mb-2 bg-gray-700">
           MCSP-21
@@ -44,24 +38,23 @@ export default function Cohorts() {
           +
         </button>
       </div>
-      <div className="flex w-2/3 h-auto border border-white mt-2 rounded-lg justify-center">
-        <h1 className="w-56 h-fit text-center text-2xl mb-2">Students</h1>
-        {/* {students.map((student) => (
-          <div
-            key={student.id}
-            className="border border-white mt-2 rounded-lg h-20 flex justify-between items-center"
-          >
-            <span className="mr-auto">{student.name}</span>
-            <button className="border border-white rounded-md">View</button>
-          </div>
-        ))} */}
-        <ReactModal
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
-          className="Modal"
-          overlayClassName="Overlay"
-        ></ReactModal>
+      <div className="flex w-3/4 flex-col h-screen items-center ">
+        <FilterBar />
+        <StudentDisplay />
       </div>
+
+      <ReactModal
+        ariaHideApp={false}
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-0 items-center flex"
+        className="p-0 z-30 flex bg-[#141414] rounded-lg h-2/3 w-1/4 text-white justify-center fixed bottom-0 left-0"
+        contentLabel="Modal"
+      >
+        <div className="">
+          <CohortModal />
+        </div>
+      </ReactModal>
     </div>
   );
 }
