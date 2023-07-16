@@ -8,37 +8,73 @@ export const sql = postgres(process.env.DATABASE_URL);
 
 const PORT = process.env.PORT;
 
-app.get("/api/users/:name", (req, res) => {
-  const { name } = req.params; // Access the parameter from req.params
+// app.get("/api/studentInfo/:name", (req, res) => {
+//   const { name } = req.params; // Access the parameter from req.params
 
-  sql`SELECT *
-  FROM users
-  WHERE LOWER(name) LIKE LOWER(${name} || '%')
-   `
+//   sql`SELECT *
+//   FROM student_info
+//   WHERE LOWER(name) LIKE LOWER(${name} || '%')
+//    `
 
-    .then((students) => {
-      res.json(students);
-    })
-    .catch((error) => {
-      console.error("Error retrieving students:", error);
-      res.status(500).json({ error: "Failed to retrieve students" });
-    });
-});
+//     .then((students) => {
+//       res.json(students);
+//     })
+//     .catch((error) => {
+//       console.error("Error retrieving students:", error);
+//       res.status(500).json({ error: "Failed to retrieve students" });
+//     });
+// });
 
+// app.get("/api/users/:name", (req, res) => {
+//   const { name } = req.params; // Access the parameter from req.params
+
+//   sql`SELECT *
+//   FROM users
+//   WHERE LOWER(name) LIKE LOWER(${name} || '%')
+//    `
+
+//     .then((students) => {
+//       res.json(students);
+//     })
+//     .catch((error) => {
+//       console.error("Error retrieving students:", error);
+//       res.status(500).json({ error: "Failed to retrieve students" });
+//     });
+// });
+
+//get all student info
 app.get("/api/studentInfo", (req, res) => {
-  sql`SELECT *
+  const { name } = req.query; // Access the parameter from req.params
+  if (name) {
+    sql`SELECT *
+    FROM student_info
+    WHERE LOWER(name) LIKE LOWER(${name} || '%')
+     `
+
+      .then((students) => {
+        res.json(students);
+      })
+      .catch((error) => {
+        console.error("Error retrieving students:", error);
+        res.status(500).json({ error: "Failed to retrieve students" });
+      });
+  } else {
+    console.log(req.query);
+    sql`SELECT *
   FROM student_info
    `
-    .then((data) => {
-      res.json(data);
-      console.log();
-    })
-    .catch((error) => {
-      console.error("Error retrieving info:", error);
-      res.status(500).json({ error: "Failed to retrieve info" });
-    });
+      .then((data) => {
+        res.json(data);
+        console.log();
+      })
+      .catch((error) => {
+        console.error("Error retrieving info:", error);
+        res.status(500).json({ error: "Failed to retrieve info" });
+      });
+  }
 });
 
+//get all cohorts
 app.get("/api/cohorts", (req, res) => {
   sql`
     SELECT *
@@ -54,12 +90,13 @@ app.get("/api/cohorts", (req, res) => {
     });
 });
 
+//query for student info by cohort id
 app.get("/api/studentInfo/:id", (req, res) => {
   const id = req.params.id; // Retrieve the id from the URL parameters
 
   sql`SELECT * FROM student_info WHERE cohort_id = ${id}`
     .then((result) => {
-      console.log("students:", result);
+      console.log("students_backend", result);
       res.json(result);
     })
     .catch((error) => {
@@ -68,6 +105,7 @@ app.get("/api/studentInfo/:id", (req, res) => {
     });
 });
 
+//creating new cohort
 app.post("/api/cohorts", (req, res) => {
   const { cohortName, startDate, students } = req.body;
   console.log(cohortName, startDate, students);
@@ -81,7 +119,7 @@ app.post("/api/cohorts", (req, res) => {
       const cohortId = result[0].id;
       const updatePromises = students.map((student) => {
         console.log("Student ID:", student.id);
-        return sql`UPDATE student_info SET cohort_id = ${cohortId} WHERE user_id = ${student.id}`;
+        return sql`UPDATE student_info SET cohort_id = ${cohortId} WHERE id = ${student.id}`;
       });
       return Promise.all(updatePromises);
     })

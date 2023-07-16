@@ -47,7 +47,7 @@ export default function StudentDisplay() {
                 aria-controls={`accordion-collapse-body-${index}`}
                 onClick={() => toggleAccordion(index)} // Add event handler to toggle visibility
               >
-                <span>{student.user_id}</span>
+                <span>{student.name}</span>
                 <svg
                   data-accordion-icon
                   className={`w-3 h-3 rotate-180 shrink-0 ${

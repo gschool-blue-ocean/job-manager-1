@@ -28,7 +28,27 @@ export default function StudentSignUpForm() {
         <h1 className="text-3xl font-semibold text-center text-white underline">
           Student Sign up
         </h1>
+<<<<<<< HEAD
         <form className="mt-6">
+=======
+        <form onSubmit={handleSubmitStudentForm} className="mt-6">
+          <div className="mb-2">
+            <label
+              htmlFor="name"
+              className="block text-sm font-semibold text-white"
+            >
+              Name
+            </label>
+            <input
+              type="name"
+              className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              onChange={(e) =>
+                setStudentForm({ ...studentForm, name: e.target.value })
+              }
+              value={studentForm.name}
+            />
+          </div>
+>>>>>>> 423d3d3 (routes and auto search fix)
           <div className="mb-2">
             <label
               htmlFor="email"
@@ -38,7 +58,11 @@ export default function StudentSignUpForm() {
             </label>
             <input
               type="email"
-              className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40 "
+              className="block w-full px-4 py-2 mt-2 text-white bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              onChange={(e) =>
+                setStudentForm({ ...studentForm, email: e.target.value })
+              }
+              value={studentForm.email}
             />
           </div>
           <div className="mb-2">
@@ -50,44 +74,28 @@ export default function StudentSignUpForm() {
             </label>
             <input
               type="password"
-              className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              className="block w-full px-4 py-2 mt-2 text-white bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              onChange={(e) =>
+                setStudentForm({ ...studentForm, password: e.target.value })
+              }
+              value={studentForm.password}
             />
           </div>
           <a href="#" className="text-xs text-white hover:underline">
             Forget Password?
           </a>
           <div className="mt-6">
+<<<<<<< HEAD
             <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-900 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
               Login
+=======
+            <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+              Sign up
+>>>>>>> 423d3d3 (routes and auto search fix)
             </button>
           </div>
         </form>
       </div>
-
-      <form onSubmit={(e) => handleSubmitStudentForm(e)}>
-        <input
-          onChange={(e) =>
-            setStudentForm({ ...studentForm, email: e.target.value })
-          }
-          placeholder="EMAIL"
-          value={studentForm.email}
-        ></input>
-        <input
-          onChange={(e) =>
-            setStudentForm({ ...studentForm, name: e.target.value })
-          }
-          placeholder="name"
-          value={studentForm.name}
-        ></input>
-        <input
-          placeholder="Password"
-          onChange={(e) =>
-            setStudentForm({ ...studentForm, password: e.target.value })
-          }
-          value={studentForm.password}
-        ></input>
-        <button type="submit">Submit</button>
-      </form>
     </div>
   );
 }

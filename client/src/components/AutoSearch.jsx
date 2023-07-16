@@ -5,14 +5,15 @@ const AutoSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  
   const { students, setStudents } = useStudents();
 
   useEffect(() => {
     if (searchTerm && searchTerm.trim().length > 0) {
-      fetch(`/api/users/${searchTerm}`)
+      fetch(`/api/studentInfo?name=${searchTerm}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          console.log("search", data);
           setSearchResults(data);
         })
         .catch((error) => {
@@ -30,10 +31,13 @@ const AutoSearch = () => {
   };
 
   const handleSelectSuggestion = (user) => {
+    console.log("user name", user.name);
     setStudents([{ name: user.name, id: user.id }, ...students]);
-    console.log(students);
     setSearchTerm("");
   };
+  useEffect(() => {
+    console.log("updated students", students);
+  }, [students]);
 
   return (
     <div>

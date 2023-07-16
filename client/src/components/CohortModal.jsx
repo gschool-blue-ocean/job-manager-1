@@ -4,7 +4,7 @@ import { useStudents } from "../context/StudentProvider";
 import axios from "axios";
 
 function CohortModal() {
-  const { students, fetchCohorts } = useStudents();
+  const { setStudents, students, fetchCohorts } = useStudents();
   const [cohortName, setCohortName] = useState("");
   const [startDate, setStartDate] = useState("");
 
@@ -21,6 +21,7 @@ function CohortModal() {
       });
       console.log(response.data);
       fetchCohorts();
+      setStudents(students);
     } catch (err) {
       console.error(err.message);
     }
