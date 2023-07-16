@@ -14,12 +14,18 @@ export default function LandingPage() {
               Welcome to our platform! Sign up as a student or an admin to get started.
             </p>
             <div className="space-y-4 text-2xl">
-              <button className="bg-blue-500 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-md border border-blue-600 h-24 w-full">
-                <Link to="/studentsignup">Student Signup</Link>
+              <Link to="/studentsignup">
+
+              <button  className="bg-blue-500 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-md border border-blue-600 h-24 w-full">
+                Student Signup
               </button>
-              <button className="bg-green-500 hover:bg-green-900 text-white font-bold py-3 px-6 rounded-md border border-green-600 h-24 w-full">
-                <Link to="/adminsignup">Admin Signup</Link>
+              </Link>
+              <Link to="/adminsignup">
+
+              <button className="bg-green-500 mt-6 hover:bg-green-900 text-white font-bold py-3 px-6 rounded-md border border-green-600 h-24 w-full">
+                Admin Signup
               </button>
+              </Link>
             </div>
           </div>
         </div>

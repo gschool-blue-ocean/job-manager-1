@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 
 export default function StudentSignUpForm() {
@@ -8,6 +9,8 @@ export default function StudentSignUpForm() {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleSubmitStudentForm = async (e) => {
     try {
       e.preventDefault();
@@ -16,6 +19,12 @@ export default function StudentSignUpForm() {
         studentForm
       );
       console.log(response);
+
+        if(response.status !== 200) {
+            throw new Error("Something went wrong");
+        }
+
+        navigate("/studenthome");
     } catch (error) {
       console.log(error);
     }

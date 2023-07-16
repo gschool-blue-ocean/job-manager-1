@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom';
 
 export default function AdminSignUpForm() {
   const [adminForm, setAdminForm] = useState({
@@ -7,6 +8,8 @@ export default function AdminSignUpForm() {
     name: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleSubmitAdminForm = async (e) => {
     try {
@@ -16,6 +19,13 @@ export default function AdminSignUpForm() {
         adminForm
       );
       console.log(response);
+
+      if(response.status !== 200) {
+        throw new Error("Something went wrong");
+      }
+
+      navigate("/adminhome");
+
     } catch (error) {
       console.log(error);
     }
@@ -71,14 +81,13 @@ export default function AdminSignUpForm() {
               value={adminForm.password}
             />
           </div>
-          <a href="#" className="text-xs text-white hover:underline">
+          <a href="#" className="text-xs  text-white hover:underline">
             Forget Password?
           </a>
-          <div className="mt-6">
-            <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+          
+            <button className="w-full mt-6 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
               Sign up
             </button>
-          </div>
         </form>
       </div>
     </div>
