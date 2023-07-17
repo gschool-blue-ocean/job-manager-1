@@ -6,7 +6,7 @@ const saltRounds = 10;
 export const hashPasswordMiddleware = (req, res, next) => {
   if (
     req.body.password &&
-    req.originalUrl !== "/api/login" &&
+    req.originalUrl !== "/api/signup" &&
     req.originalUrl !== "/users/password"
   ) {
     bcrypt.hash(req.body.password, saltRounds, (err, hashedPassword) => {

@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 export default function StudentSignUp() {
   return (
-    <div>
+    <div className="bg-gray-900">
       <Header />
       <StudentSignUpForm />
       <Footer />
