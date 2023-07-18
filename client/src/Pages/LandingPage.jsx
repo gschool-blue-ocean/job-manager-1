@@ -31,7 +31,7 @@ export default function LandingPage() {
         </div>
         <div className="flex justify-end w-1/2 h-1/2 ml-auto ">
           <img
-            src="./client/imgs/resize.jpg"
+            src="../imgs/resize.jpg"
             alt="image"
             className="rounded-3xl pt-60 mx-60"
           />
