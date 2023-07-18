@@ -7,6 +7,8 @@ import StudentDisplay from "./StudentDisplay";
 import AutoSearch from "./AutoSearch";
 import { useStudents } from "../context/StudentProvider";
 import axios from "axios";
+import { BsTrash } from "react-icons/bs";
+import { CgAdd } from "react-icons/cg";
 
 export default function Cohorts() {
   const { setStudents, students, fetchCohorts } = useStudents();
@@ -29,6 +31,16 @@ export default function Cohorts() {
     }
   };
 
+  const deleteCohort = async (cohortId) => {
+    try {
+      const res = await axios.delete(`/api/cohorts/${cohortId}`);
+      console.log("deleted cohorts: ", res.data);
+      fetchCohorts();
+    } catch (error) {
+      console.error("Error deleting cohort:", error);
+    }
+  };
+
   useEffect(() => {
     fetchCohorts();
   }, []);
@@ -38,19 +50,28 @@ export default function Cohorts() {
       <div className="w-96 h-fit  mt-2 rounded-lg text-center text-2xl flex flex-col items-center bg-gray-800">
         <h1 className="text-center">Your Cohorts</h1>
         {cohorts.map((cohort) => (
-          <button
-            onClick={() => cohortStudents(cohort.id)}
-            key={cohort.id}
-            className="w-80 h-fit rounded-lg text-center text-xl mb-2 bg-gray-700"
-          >
-            {cohort.name}
-          </button>
+          <div className="w-80 h-fit rounded-lg text-center items-center bg-gray-700">
+            <button
+              className="text-center text-xl mb-2"
+              onClick={() => cohortStudents(cohort.id)}
+              key={cohort.id}
+            >
+              {cohort.name}
+            </button>
+
+            <button
+              onClick={() => deleteCohort(cohort.id)}
+              className=" text-lg"
+            >
+              <BsTrash />
+            </button>
+          </div>
         ))}
         <button
           onClick={handleAddButtonClick}
-          className="w-fit h-fit rounded-lg text-center text-3xl mb-2 bg-gray-700"
+          className="w-fit h-fit rounded-lg text-center text-3xl mb-2 bg-gray-700 mt-2"
         >
-          +
+          <CgAdd />
         </button>
       </div>
       <div className="flex w-3/4 flex-col h-screen items-center ">

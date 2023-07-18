@@ -11,7 +11,8 @@ export default function LandingPage() {
         <div className="flex flex-col items-start justify-center justify-left mx-40">
           <div className="max-w-md space-y-6">
             <p className="text-center text-white">
-              Welcome to our platform! Sign up as a student or an admin to get started.
+              Welcome to our platform! Sign up as a student or an admin to get
+              started.
             </p>
             <div className="space-y-4 text-2xl">
               <button className="bg-blue-500 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-md border border-blue-600 h-24 w-full">

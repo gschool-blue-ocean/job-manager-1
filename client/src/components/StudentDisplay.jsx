@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import StudentModalInfo from "./StudentModalInfo";
 import { useStudents } from "../context/StudentProvider";
+import ProgressBar from "./Progress";
+
 export default function StudentDisplay() {
   const { students } = useStudents();
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -48,6 +50,7 @@ export default function StudentDisplay() {
                 onClick={() => toggleAccordion(index)} // Add event handler to toggle visibility
               >
                 <span>{student.name}</span>
+                <ProgressBar progressPercentage={75} />
                 <svg
                   data-accordion-icon
                   className={`w-3 h-3 rotate-180 shrink-0 ${
