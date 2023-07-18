@@ -50,6 +50,7 @@ export default function StudentDisplay() {
                 onClick={() => toggleAccordion(index)} // Add event handler to toggle visibility
               >
                 <span>{student.name}</span>
+
                 <ProgressBar progressPercentage={75} />
                 <svg
                   data-accordion-icon
