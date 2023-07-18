@@ -29,7 +29,7 @@ export default function StudentComponents() {
 
   return (
     <div className="flex flex-col justify-start items-center h-screen pt-4 bg-gray-900">
-      <div className="p-2 mb-4 h-28 w-1/2 bg-white border-gray-200 dark:bg-gray-600 dark:border-gray-700 rounded relative ">
+      <div className="p-2 pt-10 mb-4 h-28 w-1/2 bg-white border-gray-200 dark:bg-gray-600 dark:border-gray-700 rounded relative ">
         <div className="mb-6">
           <input
             type="text"
@@ -50,7 +50,7 @@ export default function StudentComponents() {
         </p>
       </div>
 
-      <div className="p-2 mb-4 h-28 w-1/2 bg-white border-gray-200 dark:bg-gray-600  dark:border-gray-700 rounded relative">
+      <div className="p-2 mb-4 h-28 w-1/2 pt-10 bg-white border-gray-200 dark:bg-gray-600  dark:border-gray-700 rounded relative">
         <div className="mb-6">
           <input
             type="text"
@@ -71,7 +71,7 @@ export default function StudentComponents() {
         </p>
       </div>
 
-      <div className="p-2 mb-4 h-28 w-1/2 bg-white border-gray-200 dark:bg-gray-600  dark:border-gray-700 rounded relative">
+      <div className="p-2 mb-4 h-28 w-1/2 pt-10 bg-white border-gray-200 dark:bg-gray-600  dark:border-gray-700 rounded relative">
         <div className="mb-6">
           <input
             type="text"
@@ -92,7 +92,7 @@ export default function StudentComponents() {
         </p>
       </div>
 
-      <div className="p-2 mb-4 h-28 w-1/2 bg-white border-gray-200 dark:bg-gray-600  dark:border-gray-700 rounded relative">
+      <div className="p-2 mb-4 h-28 w-1/2 pt-10 bg-white border-gray-200 dark:bg-gray-600  dark:border-gray-700 rounded relative">
         <div className="mb-6">
           <input
             type="text"
