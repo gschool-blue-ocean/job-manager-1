@@ -28,8 +28,6 @@ const token = jwt.sign({id: userInfo[0].id}, process.env.JWT_TOKEN);
 // send back token and user info
 res.status(200).json({token, userInfo});
 
-console.log(userInfo)
-res.status(200).json({userInfo})
 }catch(err){
     console.error(err.message);
     res.status(400).json({err: err.message});
