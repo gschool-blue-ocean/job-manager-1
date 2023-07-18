@@ -6,10 +6,13 @@ const StudentContext = createContext();
 export function useStudents() {
   return useContext(StudentContext);
 }
-
 export function StudentProvider({ children }) {
   const [students, setStudents] = useState([]);
   const [cohorts, setCohorts] = useState([]);
+
+  const resetStudents = () => {
+    setStudents([]);
+  };
 
   const fetchCohorts = () => {
     fetch("/api/cohorts")
@@ -31,6 +34,7 @@ export function StudentProvider({ children }) {
         cohorts,
         setCohorts,
         fetchCohorts,
+        resetStudents,
       }}
     >
       {children}

@@ -1,6 +1,7 @@
-import React, { useState , useEffect } from 'react';
-import Modal from 'react-modal';
-// import { TiTick } from 'react-icons/ti';
+
+import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
+import { TiTick } from "react-icons/ti";
 
 export default function UploadFile({ isOpen, onClose }) {
   const [selectedFile, setSelectedFile] = useState(null);
