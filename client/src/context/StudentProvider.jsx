@@ -9,6 +9,7 @@ export function useStudents() {
 export function StudentProvider({ children }) {
   const [students, setStudents] = useState([]);
   const [cohorts, setCohorts] = useState([]);
+  const [deliverables, setDeliverables] = useState([]);
 
   const resetStudents = () => {
     setStudents([]);
@@ -26,6 +27,7 @@ export function StudentProvider({ children }) {
       });
   };
 
+  const fetchDeliverables = () => {};
   return (
     <StudentContext.Provider
       value={{
@@ -35,6 +37,9 @@ export function StudentProvider({ children }) {
         setCohorts,
         fetchCohorts,
         resetStudents,
+        fetchDeliverables,
+        deliverables,
+        setDeliverables,
       }}
     >
       {children}

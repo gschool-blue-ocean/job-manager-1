@@ -137,7 +137,21 @@ app.post("/api/cohorts", (req, res) => {
     });
 });
 
-app.patch("/api/cohorts/:id");
+app.get("/api/deliverables/:id", (req, res) => {
+  const { id } = req.params;
+  sql`SELECT * FROM deliverables WHERE student_info_id = ${id}`
+    .then((result) => {
+      console.log(result);
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      console.error("Error retrieving deliverable:", error);
+      res.status(500).json({ error: "Failed to retrive deliverable" });
+    })
+    .finally(() => {
+      res.end();
+    });
+});
 
 app.delete("/api/cohorts/:id", async (req, res) => {
   const cohortId = req.params.id; // Retrieve the id from the URL parameters

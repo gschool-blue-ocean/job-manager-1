@@ -8,14 +8,19 @@ export default function StudentDisplay() {
   const { students } = useStudents();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState(null);
-  const options = [
-    { value: "I/P", label: "I/P" },
-    { value: "US", label: "US" },
-    { value: "CW", label: "CW" },
-  ];
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   const toggleAccordion = (index) => {
-    setActiveAccordion(activeAccordion === index ? null : index);
+    setActiveAccordion((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  const openModal = (student) => {
+    setSelectedStudent(student);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   // useEffect(() => {
