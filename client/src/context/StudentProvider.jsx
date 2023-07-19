@@ -37,4 +37,5 @@ export function StudentProvider({ children }) {
     </StudentContext.Provider>
   );
 }
+
 export default StudentProvider;
