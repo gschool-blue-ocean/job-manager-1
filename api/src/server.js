@@ -1,6 +1,7 @@
 import postgres from "postgres";
 import app from "./middleware/middleware.js";
 import dotenv from "dotenv";
+import { authMiddleware } from "./middleware/middleware.js";
 
 // dotenv.config({ path: "../.env" });
 
@@ -156,11 +157,11 @@ app.delete("/api/cohorts/:id", async (req, res) => {
 });
 
 //POST REQUEST TO INSERT SPECIFIC URL'S INTO THE STUDENT_INFO TABLE
-app.post("/api/deliverables", async (req, res) => {
+app.post("/api/deliverables", authMiddleware, async (req, res) => {
   const { name, url } = req.body;
-  const userId = getUserId(req);
 
   try {
+    const userId = req.user.id
     const insertOrUpdateDeliverable = sql`
       INSERT INTO deliverables (student_info_id, name, url)
       VALUES (

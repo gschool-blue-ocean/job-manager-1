@@ -21,7 +21,7 @@ export const createStudent = async (req, res) => {
 
     // Add user if it's unique
     const addedUser =
-      await sql`INSERT INTO users(name, email, password, is_admin) VALUES(${name}, ${email}, ${password}, true) RETURNING *;`;
+      await sql`INSERT INTO users(name, email, password, is_admin) VALUES(${name}, ${email}, ${password}, false) RETURNING *;`;
 
     console.log("addedUser", addedUser[0].id);
 
