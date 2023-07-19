@@ -5,6 +5,7 @@ import StudentSignUp from "../Pages/StudentSignUp.jsx";
 import AdminSignUp from "../Pages/AdminSignUp.jsx";
 import AdminHomePage from "../Pages/AdminHome.jsx";
 import StudentHomePage from "../Pages/StudentHome.jsx";
+import LoginPage from "../Pages/LoginPage.jsx"
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/adminsignup" element={<AdminSignUp />} />
           <Route path="/adminhome" element={<AdminHomePage />} />
           <Route path="/studenthome" element={<StudentHomePage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </div>

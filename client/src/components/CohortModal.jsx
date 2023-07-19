@@ -4,16 +4,14 @@ import { useStudents } from "../context/StudentProvider";
 import axios from "axios";
 
 function CohortModal() {
-  const { setStudents, students, fetchCohorts } = useStudents();
+
+  const { setStudents, students, fetchCohorts, resetStudents } = useStudents();
   const [cohortName, setCohortName] = useState("");
   const [startDate, setStartDate] = useState("");
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      console.log("Cohort Name:", cohortName);
-      console.log("Start Date:", startDate);
-      console.log("Students:", students);
       const response = await axios.post("/api/cohorts", {
         cohortName,
         startDate,
@@ -22,11 +20,11 @@ function CohortModal() {
       console.log(response.data);
       fetchCohorts();
       setStudents(students);
+
+      resetStudents();
     } catch (err) {
       console.error(err.message);
     }
-
-    // Perform your form submission logic here
   };
 
   return (

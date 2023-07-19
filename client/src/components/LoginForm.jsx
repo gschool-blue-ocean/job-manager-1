@@ -2,21 +2,20 @@ import React, { useState } from "react";
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 
-export default function AdminSignUpForm() {
-  const [adminForm, setAdminForm] = useState({
+export default function LoginForm() {
+  const [loginForm, setLoginForm] = useState({
     email: "",
-    name: "",
     password: "",
   });
 
   const navigate = useNavigate();
 
-  const handleSubmitAdminForm = async (e) => {
+  const handleSubmitLoginForm = async (e) => {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:3000/api/signup/admin",
-        adminForm
+        "http://localhost:3000/api/login",
+        loginForm
       );
       console.log(response);
 
@@ -24,34 +23,28 @@ export default function AdminSignUpForm() {
         throw new Error("Something went wrong");
       }
 
-      navigate("/adminhome");
+      if(response.data.userInfo[0].is_admin){
+       return navigate("/adminhome");
+      }
+
+      navigate("/studenthome");
+        
 
     } catch (error) {
       console.log(error);
     }
   };
-  console.log("adminForm", adminForm);
+  console.log("loginForm", loginForm);
 
   return (
     <div className="bg-gray-700 relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 m-auto bg-gray-900 rounded-md shadow-xl lg:max-w-xl">
         <h1 className="text-3xl font-semibold text-center text-white underline">
-          Admin Sign up
+          Welcome Back 😁!
         </h1>
-        <form onSubmit={(e) => handleSubmitAdminForm(e)} className="mt-6">
+        <form onSubmit={(e) => handleSubmitLoginForm(e)} className="mt-6">
           <div className="mb-2">
-            <label
-              htmlFor="name"
-              className="block text-sm font-semibold text-white"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              onChange={(e) => setAdminForm({ ...adminForm, name: e.target.value })}
-              value={adminForm.name}
-            />
+            
           </div>
           <div className="mb-2">
             <label
@@ -63,8 +56,8 @@ export default function AdminSignUpForm() {
             <input
               type="email"
               className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              onChange={(e) => setAdminForm({ ...adminForm, email: e.target.value })}
-              value={adminForm.email}
+              onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
+              value={loginForm.email}
             />
           </div>
           <div className="mb-2">
@@ -77,8 +70,8 @@ export default function AdminSignUpForm() {
             <input
               type="password"
               className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              onChange={(e) => setAdminForm({ ...adminForm, password: e.target.value })}
-              value={adminForm.password}
+              onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+              value={loginForm.password}
             />
           </div>
           <a href="#" className="text-xs  text-white hover:underline">
@@ -86,7 +79,7 @@ export default function AdminSignUpForm() {
           </a>
           
             <button className="w-full mt-6 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-              Sign up
+              Login 
             </button>
         </form>
       </div>
