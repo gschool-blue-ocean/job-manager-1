@@ -23,6 +23,9 @@ export default function LoginForm() {
         throw new Error("Something went wrong");
       }
 
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+
+      console.log(response.data.userInfo[0].is_admin)
       if(response.data.userInfo[0].is_admin){
        return navigate("/adminhome");
       }
