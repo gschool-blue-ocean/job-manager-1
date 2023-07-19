@@ -15,7 +15,7 @@ export default function AdminSignUpForm() {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:3000/api/signup/admin",
+        "/api/signup/admin",
         adminForm
       );
       console.log(response);
