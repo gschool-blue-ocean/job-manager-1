@@ -96,19 +96,6 @@ export default function StudentDisplay() {
           Save
         </button>
       </div>
-
-      <ReactModal
-        ariaHideApp={false}
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-30 flex justify-center items-center"
-        className="p-0 z-30 flex bg-[#141414] rounded-lg h-2/3 w-1/3 text-white justify-center fixed"
-        contentLabel="Modal"
-      >
-        <div className="">
-          <StudentModalInfo />
-        </div>
-      </ReactModal>
     </div>
   );
 }

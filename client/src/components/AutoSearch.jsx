@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useStudents } from "../context/StudentProvider";
 
+import { useStudents } from "../context/StudentProvider";
 const AutoSearch = () => {
+  const { setTempStudents, tempStudents } = useStudents();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  
-  const { students, setStudents } = useStudents();
 
   useEffect(() => {
     if (searchTerm && searchTerm.trim().length > 0) {
@@ -32,12 +31,12 @@ const AutoSearch = () => {
 
   const handleSelectSuggestion = (user) => {
     console.log("user name", user.name);
-    setStudents([{ name: user.name, id: user.id }, ...students]);
+    setTempStudents([{ name: user.name, id: user.id }, ...tempStudents]);
     setSearchTerm("");
   };
   useEffect(() => {
-    console.log("updated students", students);
-  }, [students]);
+    console.log("updated students", tempStudents);
+  }, [tempStudents]);
 
   return (
     <div>

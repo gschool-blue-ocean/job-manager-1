@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function FilterBar() {
-  return <div>fitler</div>;
+  return <div>filter</div>;
 }

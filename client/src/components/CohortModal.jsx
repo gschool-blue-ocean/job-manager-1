@@ -4,22 +4,21 @@ import { useStudents } from "../context/StudentProvider";
 import axios from "axios";
 
 function CohortModal() {
-
-  const { setStudents, students, fetchCohorts, resetStudents } = useStudents();
+  const { setStudents, students, fetchCohorts, resetStudents, tempStudents } =
+    useStudents();
   const [cohortName, setCohortName] = useState("");
   const [startDate, setStartDate] = useState("");
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      event.preventDefault();
       const response = await axios.post("/api/cohorts", {
         cohortName,
         startDate,
-        students,
+        students: tempStudents,
       });
       console.log(response.data);
       fetchCohorts();
-      setStudents(students);
 
       resetStudents();
     } catch (err) {
@@ -64,7 +63,7 @@ function CohortModal() {
           style={{ width: "40vw", height: "50vh" }}
         >
           <ul className="flex-col">
-            {students.map((student, index) => (
+            {tempStudents.map((student, index) => (
               <li className="text-xl" key={index}>
                 {student.name}
               </li>
