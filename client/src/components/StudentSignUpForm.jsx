@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 
 export default function StudentSignUpForm() {
@@ -8,6 +9,8 @@ export default function StudentSignUpForm() {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleSubmitStudentForm = async (e) => {
     try {
       e.preventDefault();
@@ -16,6 +19,12 @@ export default function StudentSignUpForm() {
         studentForm
       );
       console.log(response);
+
+        if(response.status !== 200) {
+            throw new Error("Something went wrong");
+        }
+
+        navigate("/studenthome");
     } catch (error) {
       console.log(error);
     }
@@ -23,6 +32,7 @@ export default function StudentSignUpForm() {
   console.log("studentForm", studentForm);
 
   return (
+
     <div className="bg-gray-700 relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 m-auto bg-gray-900 rounded-md shadow-xl lg:max-w-xl">
         <h1 className="text-3xl font-semibold text-center text-white underline">
@@ -38,7 +48,10 @@ export default function StudentSignUpForm() {
             </label>
             <input
               type="name"
-              className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+
+            className="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              // className="block w-full px-4 py-2 mt-2 text-white bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+
               onChange={(e) =>
                 setStudentForm({ ...studentForm, name: e.target.value })
               }

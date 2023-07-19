@@ -2,7 +2,6 @@ import React from "react";
 
 export default function StudentModalInfo({ student }) {
   const options = [
-    { value: "I/P", label: "I/P" },
     { value: "US", label: "US" },
     { value: "CW", label: "CW" },
   ];

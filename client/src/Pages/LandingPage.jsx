@@ -11,21 +11,28 @@ export default function LandingPage() {
         <div className="flex flex-col items-start justify-center justify-left mx-40">
           <div className="max-w-md space-y-6">
             <p className="text-center text-white">
-              Welcome to our platform! Sign up as a student or an admin to get started.
+              Welcome to our platform! Sign up as a student or an admin to get
+              started.
             </p>
             <div className="space-y-4 text-2xl">
-              <button className="bg-blue-500 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-md border border-blue-600 h-24 w-full">
-                <Link to="/studentsignup">Student Signup</Link>
+              <Link to="/studentsignup">
+
+              <button  className="bg-blue-500 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-md border border-blue-600 h-24 w-full">
+                Student Signup
               </button>
-              <button className="bg-green-500 hover:bg-green-900 text-white font-bold py-3 px-6 rounded-md border border-green-600 h-24 w-full">
-                <Link to="/adminsignup">Admin Signup</Link>
+              </Link>
+              <Link to="/adminsignup">
+
+              <button className="bg-green-500 mt-6 hover:bg-green-900 text-white font-bold py-3 px-6 rounded-md border border-green-600 h-24 w-full">
+                Admin Signup
               </button>
+              </Link>
             </div>
           </div>
         </div>
         <div className="flex justify-end w-1/2 h-1/2 ml-auto ">
           <img
-            src="./client/imgs/resize.jpg"
+            src="../imgs/resize.jpg"
             alt="image"
             className="rounded-3xl pt-60 mx-60"
           />

@@ -78,7 +78,7 @@ app.get("/api/studentInfo", (req, res) => {
 app.get("/api/cohorts", (req, res) => {
   sql`
     SELECT *
-    FROM cohort
+    FROM cohorts
   `
     .then((result) => {
       console.log("Cohorts:", result);
@@ -134,6 +134,25 @@ app.post("/api/cohorts", (req, res) => {
       // Send a response to complete the request-response cycle
       res.end();
     });
+});
+
+app.patch("/api/cohorts/:id");
+
+app.delete("/api/cohorts/:id", async (req, res) => {
+  const cohortId = req.params.id; // Retrieve the id from the URL parameters
+
+  try {
+    // Update associated student records to set cohort_id to NULL or a default value
+    await sql`UPDATE student_info SET cohort_id = NULL WHERE cohort_id = ${cohortId}`;
+
+    // Now, delete the cohort
+    const result = await sql`DELETE FROM cohort WHERE id = ${cohortId}`;
+    console.log("cohort deleted", result);
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error deleting cohort:", error);
+    res.status(500).json({ error: "Failed to delete cohort" });
+  }
 });
 
 app.listen(PORT, () => {

@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export default function Header() {
   return (
@@ -10,7 +11,7 @@ export default function Header() {
           </span>
         </a>
         <div className="w-full md:w-auto ml-6 items-center">
-          <ul className="flex font-medium  ">
+          <ul className="flex font-medium items-center  ">
             <li className="flex">
               <a className="block py-2 pl-3 pr-4 text-blue-500">
                 Home
@@ -22,6 +23,7 @@ export default function Header() {
                 Documents
               </a>
             </li>
+          <Link to="/login" className="font-bold items-center text-white hover:text-blue-600 cursor-pointer">Login</Link>
           </ul>
         </div>
       </div>
