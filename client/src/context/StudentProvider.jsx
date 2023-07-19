@@ -10,9 +10,10 @@ export function StudentProvider({ children }) {
   const [students, setStudents] = useState([]);
   const [cohorts, setCohorts] = useState([]);
   const [deliverables, setDeliverables] = useState([]);
+  const [tempStudents, setTempStudents] = useState([]);
 
   const resetStudents = () => {
-    setStudents([]);
+    setTempStudents([]);
   };
 
   const fetchCohorts = () => {
@@ -40,6 +41,8 @@ export function StudentProvider({ children }) {
         fetchDeliverables,
         deliverables,
         setDeliverables,
+        tempStudents,
+        setTempStudents,
       }}
     >
       {children}

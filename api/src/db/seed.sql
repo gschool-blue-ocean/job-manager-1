@@ -25,5 +25,11 @@ VALUES ('Student 2', 'Lorem ipsum dolor sit amet.', 'Junior', 'Top Secret', 'Ele
 INSERT INTO deliverables (student_info_id, name, url, is_submitted) VALUES (1, 'Assignment 1', 'https://example.com/assignment1', true);
 INSERT INTO deliverables (student_info_id, name, url, is_submitted) VALUES (2, 'Assignment 2', 'https://example.com/assignment2', false);
 
+INSERT INTO deliverables (student_info_id, name, url, is_submitted) VALUES (1, 'Assignment 3', 'https://example.com/assignment1', true);
+INSERT INTO deliverables (student_info_id, name, url, is_submitted) VALUES (2, 'Assignment 4', 'https://example.com/assignment2', false);
+
 INSERT INTO deliverable_statuses (deliverable_id, is_completed, completed_date) VALUES (1, true, '2023-07-15 10:00:00');
 INSERT INTO deliverable_statuses (deliverable_id, is_completed, completed_date) VALUES (2, false, null);
+
+INSERT INTO deliverable_statuses (deliverable_id, is_completed, completed_date) VALUES (3, true, '2023-07-15 10:00:00');
+INSERT INTO deliverable_statuses (deliverable_id, is_completed, completed_date) VALUES (4, false, null);
