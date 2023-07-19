@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function StudentComponents() {
   const [resumeInputValue, setResumeInputValue] = useState("");
@@ -7,24 +8,38 @@ export default function StudentComponents() {
     useState("");
   const [linkedinInputValue, setLinkedinInputValue] = useState("");
 
+  let name;
+
   const handleResumeInputChange = (e) => {
+    name = "resume";
     setResumeInputValue(e.target.value);
   };
 
   const handleCoverLetterInputChange = (e) => {
+    name = "cover_letter"
     setCoverLetterInputValue(e.target.value);
   };
 
   const handlePersonalNarrativeInputChange = (e) => {
+    name = "personal_narrative"
     setPersonalNarrativeInputValue(e.target.value);
   };
 
   const handleLinkedinInputChange = (e) => {
+    name = "linkedin"
     setLinkedinInputValue(e.target.value);
   };
 
-  const handleUploadButtonClick = (inputValue) => {
-    console.log(inputValue);
+  const handleUploadButtonClick = async (inputValue) => {
+    try {
+      await axios.post("/api/deliverables", {
+        name: name,
+        url: inputValue,
+      });
+      console.log("Data uploaded successfully");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

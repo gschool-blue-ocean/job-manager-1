@@ -136,6 +136,30 @@ app.post("/api/cohorts", (req, res) => {
     });
 });
 
+//POST REQUEST TO INSERT SPECIFIC URL'S INTO THE STUDENT_INFO TABLE
+app.post("/api/deliverables", async (req, res) => {
+  const { name, url } = req.body;
+  const userId = getUserId(req);
+
+  try {
+    const insertOrUpdateDeliverable = sql`
+      INSERT INTO deliverables (student_info_id, name, url)
+      VALUES (
+        (SELECT id FROM student_info WHERE user_id = ${userId}),
+        ${name},
+        ${url}
+      )
+      ON CONFLICT (student_info_id, name)
+      DO UPDATE SET url = EXCLUDED.url
+    `;
+
+    res.status(200)
+  } catch (error) {
+    console.error("Error updating links:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
+
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
