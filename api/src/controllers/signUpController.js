@@ -28,6 +28,7 @@ export const createStudent = async (req, res) => {
     const createStudentInfo =
       await sql`INSERT INTO student_info(user_id, name) VALUES(${addedUser[0].id}, ${addedUser[0].name}) RETURNING *;`;
 
+      const createStudentDeliverable = await sql`INSERT INTO deliverables (student_id) VALUES (${addedUser[0].id})`
     console.log("JWT_TOKEN", process.env.JWT_TOKEN);
 
     const token = jwt.sign(addedUser[0].id, `${process.env.JWT_TOKEN}`);

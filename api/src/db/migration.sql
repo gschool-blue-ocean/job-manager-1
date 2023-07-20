@@ -88,7 +88,7 @@ CREATE TABLE student_info (
 
 CREATE TABLE deliverables (
   id SERIAL PRIMARY KEY,
-  student_info_id INTEGER REFERENCES student_info(id),
+  student_id INTEGER REFERENCES users(id),
   name TEXT,         
   url TEXT,          
   is_submitted BOOLEAN DEFAULT FALSE  

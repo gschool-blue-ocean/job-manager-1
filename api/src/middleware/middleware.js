@@ -8,6 +8,7 @@ import studentInfoRouter from "../routes/studentInfoRouter.js";
 import { hashPasswordMiddleware } from "../utils/auth.js";
 import loginRouter from "../routes/loginRouter.js";
 import jwt from "jsonwebtoken";
+import { sql } from "../server.js";
 
 const app = express();
 
@@ -32,19 +33,19 @@ export const authMiddleware = async (req, res, next) => {
   
       const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
   
-      const user = await db.query(
+      const user = await
         sql`
           SELECT id
           FROM users
           WHERE id = ${decodedToken.id}
         `
-      );
-  
+      console.log(user)
+      console.log(decodedToken)
       if (!user) {
         return res.status(401).json({ error: "Unauthorized" });
       }
   
-      req.userId = user.id; // Add userId to the request object
+      req.userId = user[0].id; // Add userId to the request object
       next();
     } catch (error) {
       console.error("Error in authentication middleware:", error);

@@ -2,40 +2,41 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function StudentComponents() {
+  const [name, setName] = useState("");
   const [resumeInputValue, setResumeInputValue] = useState("");
   const [coverLetterInputValue, setCoverLetterInputValue] = useState("");
   const [personalNarrativeInputValue, setPersonalNarrativeInputValue] =
     useState("");
   const [linkedinInputValue, setLinkedinInputValue] = useState("");
 
-  let name;
-
   const handleResumeInputChange = (e) => {
-    name = "resume";
+    setName("resume");
     setResumeInputValue(e.target.value);
   };
 
   const handleCoverLetterInputChange = (e) => {
-    name = "cover_letter"
+    setName("cover_letter");
     setCoverLetterInputValue(e.target.value);
   };
 
   const handlePersonalNarrativeInputChange = (e) => {
-    name = "personal_narrative"
+    setName("personal_narrative");
     setPersonalNarrativeInputValue(e.target.value);
   };
 
   const handleLinkedinInputChange = (e) => {
-    name = "linkedin"
+    setName("linkedin")
     setLinkedinInputValue(e.target.value);
   };
 
   const handleUploadButtonClick = async (inputValue) => {
     try {
+      const currToken = JSON.parse(localStorage.getItem("token"));
+      console.log(name)
       await axios.post("/api/deliverables", {
         name: name,
         url: inputValue,
-      });
+      },{headers:{Authorization: `Bearer ${currToken}`}});
       console.log("Data uploaded successfully");
     } catch (error) {
       console.error(error);
