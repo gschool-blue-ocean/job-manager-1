@@ -9,41 +9,28 @@ export const sql = postgres(process.env.DATABASE_URL);
 
 const PORT = process.env.PORT;
 
-// app.get("/api/studentInfo/:name", (req, res) => {
-//   const { name } = req.params; // Access the parameter from req.params
+app.get("/api/studentInfo/:id/deliverables/completed", async (req, res) => {
+  const { id } = req.params;
 
-//   sql`SELECT *
-//   FROM student_info
-//   WHERE LOWER(name) LIKE LOWER(${name} || '%')
-//    `
+  try {
+    const queryResult = await sql`
+      SELECT COUNT(*) AS completed_deliverables_count
+      FROM deliverables AS d
+      INNER JOIN deliverable_statuses AS ds ON d.id = ds.deliverable_id
+      WHERE d.student_info_id = ${id} AND ds.is_completed = true;
+    `;
 
-//     .then((students) => {
-//       res.json(students);
-//     })
-//     .catch((error) => {
-//       console.error("Error retrieving students:", error);
-//       res.status(500).json({ error: "Failed to retrieve students" });
-//     });
-// });
+    const completedDeliverablesCount =
+      queryResult[0].completed_deliverables_count;
+    res.json({ completedDeliverablesCount });
+  } catch (error) {
+    console.error("Error fetching completed deliverables count:", error);
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve completed deliverables count" });
+  }
+});
 
-// app.get("/api/users/:name", (req, res) => {
-//   const { name } = req.params; // Access the parameter from req.params
-
-//   sql`SELECT *
-//   FROM users
-//   WHERE LOWER(name) LIKE LOWER(${name} || '%')
-//    `
-
-//     .then((students) => {
-//       res.json(students);
-//     })
-//     .catch((error) => {
-//       console.error("Error retrieving students:", error);
-//       res.status(500).json({ error: "Failed to retrieve students" });
-//     });
-// });
-
-//get all student info
 app.get("/api/studentInfo", (req, res) => {
   const { name } = req.query; // Access the parameter from req.params
   if (name) {
@@ -111,7 +98,7 @@ app.post("/api/cohorts", (req, res) => {
   const { cohortName, startDate, students } = req.body;
   console.log(cohortName, startDate, students);
   const newCohort = sql`
-    INSERT INTO cohort (name, start_date)
+    INSERT INTO cohorts (name, start_date)
     VALUES (${cohortName}, ${startDate}) RETURNING *
   `;
 
@@ -169,15 +156,57 @@ app.get("/api/deliverables/:id", (req, res) => {
     });
 });
 
+app.get("/api/deliverable_statuses/:id", (req, res) => {
+  const { id } = req.params;
+  sql`SELECT * FROM deliverable_statuses WHERE deliverable_id = ${id}`
+    .then((result) => {
+      console.log(result);
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ error: "Internal Server Error" });
+    })
+    .finally(() => {
+      res.end();
+    });
+});
+
+////////////////////////////
+app.patch("/api/deliverable_statuses/:id", (req, res) => {
+  const { id } = req.params;
+  const { is_completed } = req.body;
+
+  if (typeof is_completed !== "boolean") {
+    return res.status(400).json({
+      error: "Invalid value for is_completed. It should be a boolean.",
+    });
+  }
+  sql`
+    UPDATE deliverable_statuses
+    SET is_completed = ${is_completed}
+    WHERE deliverable_id = ${id}
+  `
+
+    .then(() => {
+      res.status(200).json({ message: "Update successful" });
+    })
+    .catch((error) => {
+      console.error("Error updating record:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+// Assuming you have already set up your app and database connection
+// ...
+
+/////////////////////////////////////
 app.delete("/api/cohorts/:id", async (req, res) => {
-  const cohortId = req.params.id; // Retrieve the id from the URL parameters
+  const cohortId = req.params.id;
 
   try {
-    // Update associated student records to set cohort_id to NULL or a default value
     await sql`UPDATE student_info SET cohort_id = NULL WHERE cohort_id = ${cohortId}`;
 
-    // Now, delete the cohort
-    const result = await sql`DELETE FROM cohort WHERE id = ${cohortId}`;
+    const result = await sql`DELETE FROM cohorts WHERE id = ${cohortId}`;
     console.log("cohort deleted", result);
     res.json(result.rows);
   } catch (error) {

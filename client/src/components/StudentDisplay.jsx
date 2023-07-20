@@ -6,38 +6,55 @@ import ProgressBar from "./Progress";
 
 export default function StudentDisplay() {
   const { students } = useStudents();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState(null);
-  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [completedDeliverables, setCompletedDeliverables] = useState({});
+
+  const fetchCompletedDeliverables = async () => {
+    try {
+      // Loop through each student to fetch their completed deliverables count
+      const completedDeliverablesData = await Promise.all(
+        students.map(async (student) => {
+          const response = await fetch(
+            `/api/studentInfo/${student.id}/deliverables/completed`
+          );
+          const data = await response.json();
+          return {
+            studentId: student.id,
+            count: data.completedDeliverablesCount,
+          };
+        })
+      );
+
+      // Convert the data into an object for easy access (studentId as key)
+      const completedDeliverablesObject = completedDeliverablesData.reduce(
+        (acc, item) => {
+          acc[item.studentId] = item.count;
+          return acc;
+        },
+        {}
+      );
+
+      setCompletedDeliverables(completedDeliverablesObject);
+    } catch (error) {
+      console.error("Error fetching completed deliverables:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCompletedDeliverables(students, setCompletedDeliverables);
+  }, [students]);
+
+  const handleSaveButtonClick = () => {
+    fetchCompletedDeliverables();
+  };
 
   const toggleAccordion = (index) => {
     setActiveAccordion((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const openModal = (student) => {
-    setSelectedStudent(student);
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
-  // useEffect(() => {
-  //   fetch("/api/users")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data.allUsers);
-  //       setStudents(data.allUsers); // Save the data in the state
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
-
   return (
-    <div className="bg-gray-800 flex flex-col w-2/3 h-auto mt-2 rounded-lg p-2.5">
-      <h1 className="text-center text-2xl mb-2">Students</h1>
+    <div className="bg-gray-800 flex flex-col w-2/3 h-auto mt-2 rounded-lg p-2.5 overflow-auto">
+      <h1 className="flex justify-center text-2xl mb-2">Students</h1>
       <div>
         {students.map((student, index) => (
           <div
@@ -45,18 +62,26 @@ export default function StudentDisplay() {
             data-accordion="collapse"
             key={student.id}
           >
-            <h2 id={`accordion-collapse-heading-${index}`}>
+            <h2
+              id={`accordion-collapse-heading-${index}`}
+              className="flex items-center"
+            >
               <button
                 type="button"
                 className="bg-gray-700 mb-2 flex items-center justify-between w-full p-5 font-medium text-left text-gray-400 rounded-lg"
                 data-accordion-target={`#accordion-collapse-body-${index}`}
                 aria-expanded="true"
                 aria-controls={`accordion-collapse-body-${index}`}
-                onClick={() => toggleAccordion(index)} // Add event handler to toggle visibility
+                onClick={() => toggleAccordion(index)}
               >
                 <span>{student.name}</span>
 
-                <ProgressBar progressPercentage={75} />
+                <ProgressBar
+                  progressPercentage={
+                    (completedDeliverables[student.id] / 8) * 100
+                  }
+                />
+                <div>{(completedDeliverables[student.id] / 8) * 100}%</div>
                 <svg
                   data-accordion-icon
                   className={`w-3 h-3 rotate-180 shrink-0 ${
@@ -90,25 +115,13 @@ export default function StudentDisplay() {
           </div>
         ))}
         <button
-          type="submit"
-          className="bg-blue-500 text-white rounded-lg px-4 py-2 h-10 mr-auto"
+          type="button"
+          className="bg-blue-500 text-white rounded-lg px-4 py-2 h-10 "
+          onClick={handleSaveButtonClick}
         >
           Save
         </button>
       </div>
-
-      <ReactModal
-        ariaHideApp={false}
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-30 flex justify-center items-center"
-        className="p-0 z-30 flex bg-[#141414] rounded-lg h-2/3 w-1/3 text-white justify-center fixed"
-        contentLabel="Modal"
-      >
-        <div className="">
-          <StudentModalInfo />
-        </div>
-      </ReactModal>
     </div>
   );
 }

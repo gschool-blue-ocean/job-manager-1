@@ -15,7 +15,7 @@ export default function StudentSignUpForm() {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:3000/api/signup/student",
+        "/api/signup/student",
         studentForm
       );
       console.log(response);

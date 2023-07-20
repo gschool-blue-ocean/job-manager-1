@@ -75,7 +75,7 @@ export default function Cohorts() {
         </button>
       </div>
       <div className="flex w-3/4 flex-col h-screen items-center ">
-        <FilterBar />
+        {/* <FilterBar /> */}
         <StudentDisplay />
       </div>
       <ReactModal

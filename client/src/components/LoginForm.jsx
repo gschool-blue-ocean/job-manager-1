@@ -14,7 +14,7 @@ export default function LoginForm() {
     try {
       e.preventDefault();
       const response = await axios.post(
-        "http://localhost:3000/api/login",
+        "/api/login",
         loginForm
       );
       console.log(response);
