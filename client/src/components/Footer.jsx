@@ -37,12 +37,11 @@ export default function Footer() {
             </li>
           </ul>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-900 lg:my-8" />
+        <hr className="my-6 border-gray-700 sm:mx-auto dark:border-gray-900 lg:my-8" />
         <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2023 <a className="hover:underline">Blue Ocean™</a>. All Rights
           Reserved.
         </span>
       </div>
     </footer>
-  );
-}
+)};
