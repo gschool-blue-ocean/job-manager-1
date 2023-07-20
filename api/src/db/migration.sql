@@ -97,6 +97,6 @@ CREATE TABLE deliverables (
 CREATE TABLE deliverable_statuses (
   id SERIAL PRIMARY KEY,
   deliverable_id INTEGER REFERENCES deliverables(id),
-  is_completed BOOLEAN,   
+  is_completed BOOLEAN DEFAULT FALSE,
   completed_date TIMESTAMP 
 );

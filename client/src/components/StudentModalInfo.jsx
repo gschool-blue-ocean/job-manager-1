@@ -19,8 +19,6 @@ export default function StudentModalInfo({ student }) {
 
   return (
     <div className="text-white rounded-lg">
-      <h1 className="font-bold text-2xl">{student.name}</h1>
-
       {deliverables.map((deliverable, index) => (
         <div className="flex flex-col ml-auto">
           <div className="flex flex-row space-x-52 justify-center" key={index}>
