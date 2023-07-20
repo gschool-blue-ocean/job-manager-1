@@ -1,6 +1,7 @@
 import postgres from "postgres";
 import app from "./middleware/middleware.js";
 import dotenv from "dotenv";
+import { authMiddleware } from "./middleware/middleware.js";
 
 // dotenv.config({ path: "../.env" });
 
@@ -123,6 +124,22 @@ app.post("/api/cohorts", (req, res) => {
     });
 });
 
+//GET REQUEST FOR DILIVERABLES TABLE
+app.get("/api/deliverables", (req, res) => {
+  sql`
+    SELECT *
+    FROM deliverables
+  `
+    .then((result) => {
+      console.log("Deliverables:", result);
+      res.json(result);
+    })
+    .catch((error) => {
+      console.error("Error retrieving deliverables:", error);
+      res.status(500).json({ error: "Failed to retrieve deliverables" });
+    });
+});
+
 app.get("/api/deliverables/:id", (req, res) => {
   const { id } = req.params;
   sql`SELECT * FROM deliverables WHERE student_info_id = ${id}`
@@ -197,6 +214,51 @@ app.delete("/api/cohorts/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete cohort" });
   }
 });
+
+//POST REQUEST TO INSERT SPECIFIC URL'S INTO THE STUDENT_INFO TABLE
+// app.post("/api/deliverables", authMiddleware, async (req, res) => {
+//   const { name, url } = req.body;
+
+//   try {
+//     const userId = req.userId
+//     console.log("userId:", userId)
+//     console.log("request params:", name, url)
+//     const insertOrUpdateDeliverable = await sql`
+//       UPDATE deliverables 
+//       SET name = ${name}, url = ${url} 
+//       WHERE student_id = ${userId}
+//       RETURNING *
+//     `;
+//     console.log(insertOrUpdateDeliverable);
+//     res.status(200)
+//   } catch (error) {
+//     console.error("Error updating links:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// })
+
+app.post("/api/deliverables", authMiddleware, async (req, res) => {
+  const { name, url } = req.body;
+
+  try {
+    const userId = req.userId;
+    console.log("userId:", userId);
+    console.log("request params:", name, url);
+
+    const insertNewDeliverable = await sql`
+      INSERT INTO deliverables (student_id, name, url, is_submitted)
+      VALUES (${userId}, ${name}, ${url}, true)
+      RETURNING *
+    `;
+
+    console.log(insertNewDeliverable);
+    res.status(200).json(insertNewDeliverable); // Send the inserted data back as a response if needed
+  } catch (error) {
+    console.error("Error inserting new deliverable:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

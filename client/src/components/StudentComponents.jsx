@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function StudentComponents() {
+  const [name, setName] = useState("");
   const [resumeInputValue, setResumeInputValue] = useState("");
   const [coverLetterInputValue, setCoverLetterInputValue] = useState("");
   const [personalNarrativeInputValue, setPersonalNarrativeInputValue] =
@@ -8,23 +10,37 @@ export default function StudentComponents() {
   const [linkedinInputValue, setLinkedinInputValue] = useState("");
 
   const handleResumeInputChange = (e) => {
+    setName("resume");
     setResumeInputValue(e.target.value);
   };
 
   const handleCoverLetterInputChange = (e) => {
+    setName("cover_letter");
     setCoverLetterInputValue(e.target.value);
   };
 
   const handlePersonalNarrativeInputChange = (e) => {
+    setName("personal_narrative");
     setPersonalNarrativeInputValue(e.target.value);
   };
 
   const handleLinkedinInputChange = (e) => {
+    setName("linkedin")
     setLinkedinInputValue(e.target.value);
   };
 
-  const handleUploadButtonClick = (inputValue) => {
-    console.log(inputValue);
+  const handleUploadButtonClick = async (inputValue) => {
+    try {
+      const currToken = JSON.parse(localStorage.getItem("token"));
+      console.log(name)
+      await axios.post("/api/deliverables", {
+        name: name,
+        url: inputValue,
+      },{headers:{Authorization: `Bearer ${currToken}`}});
+      console.log("Data uploaded successfully");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
